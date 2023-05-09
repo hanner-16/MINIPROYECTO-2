@@ -17,9 +17,9 @@ import java.awt.BorderLayout;
 
 public class Menu extends JFrame implements ActionListener {
 
-    public JPanel panelI;
     private JButton startButton, instructionButton;
     private JLabel backgroundLabel, titleLabel;
+    public JPanel panelI;
 
     public Menu() 
     {
@@ -65,9 +65,13 @@ public class Menu extends JFrame implements ActionListener {
     // Manejar los eventos de los botones
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == startButton) {
+        if (e.getSource() == startButton)
+        {
             // Iniciar el juego
-        } else if (e.getSource() == instructionButton) {
+        }
+        
+        else if (e.getSource() == instructionButton)
+        {
             JOptionPane.showMessageDialog(panelI, "El Triki es un juego que se plantea en una cuadrícula 3x3. Los jugadores colocan sus símbolos en turnos con el objetivo de hacer una línea de tres. Si lo logran, ganan; de lo contrario pierden.");
         }
     }
