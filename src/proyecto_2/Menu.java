@@ -14,8 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
 
-public class Menu extends JFrame implements ActionListener {
+
+public class Menu extends JFrame implements ActionListener 
+{
 
     private JButton startButton, instructionButton;
     private JLabel backgroundLabel, titleLabel;
@@ -37,17 +40,18 @@ public class Menu extends JFrame implements ActionListener {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(80, 0, 0, 0));
         add(titleLabel, BorderLayout.NORTH);
 
-        // Cargar la imagen de fondo
-        ImageIcon backgroundImage = new ImageIcon("/imagenes/Fondo.png");
+         // Cargar la imagen de fondo
+        ImageIcon backgroundImage = new ImageIcon("/Imagenes/Fondo1.png");
         backgroundLabel = new JLabel(backgroundImage);
-        add(backgroundLabel, BorderLayout.CENTER);
+        backgroundLabel.setBounds(0, 0, 800, 600);
+        add(backgroundLabel);
 
-        // Crear los botones
+        //Crear los botones
         startButton = new JButton("Iniciar juego");
         startButton.setBounds(200, 200, 200, 50);
         startButton.addActionListener(this);
         backgroundLabel.add(startButton);
-
+        
         instructionButton = new JButton("Instrucciones");
         instructionButton.setBounds(400, 200, 200, 50);
         instructionButton.addActionListener(this);
@@ -75,9 +79,11 @@ public class Menu extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(panelI, "El Triki es un juego que se plantea en una cuadrícula 3x3. Los jugadores colocan sus símbolos en turnos con el objetivo de hacer una línea de tres. Si lo logran, ganan; de lo contrario pierden.");
         }
     }
-
+    
     public static void main(String[] args)
     {
         new Menu();
     }
 }
+
+
