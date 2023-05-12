@@ -9,81 +9,68 @@ package proyecto_2;
  * @author Daniel Esteban Gallego Velasco <gallego.daniel@correounivalle.edu.co>
  */
 
-public class Tablero 
-{
+public class Tablero {
     private char[][] casillas;
-    private int movimientos;
-    
-    public Tablero()
-    {
+
+    public Tablero() {
         casillas = new char[3][3];
-        for(int i = 0; i < 3; i++)
-        {
-            for (int j = 0; i <3; j++)
-            {
-                casillas[i][j] = ' ';
+        vaciarTablero();
+    }
+
+    public void vaciarTablero() {
+        for (int fila = 0; fila < 3; fila++) {
+            for (int columna = 0; columna < 3; columna++) {
+                casillas[fila][columna] = ' ';
             }
         }
-        movimientos = 0;
     }
-    
-    public boolean estaLleno()
-    {
-        return movimientos == 9;
+
+    public char getCasilla(int fila, int columna) {
+        return casillas[fila][columna];
     }
-    
-    public boolean haGanado(char jugador)
-    {
-        for (int i = 0; i < 3; i++) {
-            if (casillas[i][0] == jugador && casillas[i][1] == jugador && casillas[i][2] == jugador)
-            {
-                return true;
+
+    public boolean esCasillaVacia(int fila, int columna) {
+        return casillas[fila][columna] == ' ';
+    }
+
+    public void marcarCasilla(int fila, int columna, char marca) {
+        casillas[fila][columna] = marca;
+    }
+
+    public boolean estaLleno() {
+        for (int fila = 0; fila < 3; fila++) {
+            for (int columna = 0; columna < 3; columna++) {
+                if (esCasillaVacia(fila, columna)) {
+                    return false;
+                }
             }
-            
-            if (casillas[0][i] == jugador && casillas[1][i] == jugador && casillas[2][i] == jugador) 
-            {
-                return true;
-            }
         }
-        if (casillas[0][0] == jugador && casillas[1][1] == jugador && casillas[2][2] == jugador)
-        {
-            return true;
-        }
-        
-        else if (casillas[0][2] == jugador && casillas[1][1] == jugador && casillas[2][0] == jugador) 
-        {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    public boolean hacerJugada(char jugador, int fila, int columna)
-    {
-        if(casillas[fila][columna] != ' ')
-        {
-            return false;
-        }
-        
-        casillas[fila][columna] = jugador;
-        movimientos++;
         return true;
     }
-    
-    public void reiniciar()
-    {
-        for(int i = 0; i < 3; i++)
-        {
-            for (int j = 0; i <3; j++)
-            {
-                casillas[i][j] = ' ';
+
+    public boolean hayGanador(char marca) {
+        // Comprobar filas
+        for (int fila = 0; fila < 3; fila++) {
+            if (casillas[fila][0] == marca && casillas[fila][1] == marca && casillas[fila][2] == marca) {
+                return true;
             }
         }
-        movimientos = 0;
-    }
-    
-    public char getCasillas(int fila, int columna)
-    {
-        return casillas[fila][columna];
+
+        // Comprobar columnas
+        for (int columna = 0; columna < 3; columna++) {
+            if (casillas[0][columna] == marca && casillas[1][columna] == marca && casillas[2][columna] == marca) {
+                return true;
+            }
+        }
+
+        // Comprobar diagonales
+        if (casillas[0][0] == marca && casillas[1][1] == marca && casillas[2][2] == marca) {
+            return true;
+        }
+        if (casillas[0][2] == marca && casillas[1][1] == marca && casillas[2][0] == marca) {
+            return true;
+        }
+
+        return false;
     }
 }

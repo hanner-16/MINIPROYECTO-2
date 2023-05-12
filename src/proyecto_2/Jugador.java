@@ -9,29 +9,30 @@ package proyecto_2;
  * @author Daniel Esteban Gallego Velasco <gallego.daniel@correounivalle.edu.co>
  */
 
-public class Jugador 
-{
+public class Jugador {
     private String nombre;
-    private int partidas_Ganadas;
-    
-    public Jugador(String nombre)
-    {
+    private int partidasGanadas;
+    private char marca;
+
+    public Jugador(String nombre, char marca) {
         this.nombre = nombre;
-        this.partidas_Ganadas = 0;
+        this.partidasGanadas = 0;
+        this.marca = marca;
     }
-    
-    public String getNombre()
-    {
+
+    public String getNombre() {
         return nombre;
     }
-    
-    public int getPartidas_Ganadas()
-    {
-        return partidas_Ganadas;
+
+    public int getPartidasGanadas() {
+        return partidasGanadas;
     }
-    
-    public void incrementarPartidasGanadas()
-    {
-        partidas_Ganadas++;
+
+    public char getMarca() {
+        return marca;
+    }
+
+    public void incrementarPartidasGanadas() {
+        partidasGanadas++;
     }
 }
