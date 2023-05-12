@@ -12,8 +12,10 @@ package proyecto_2;
 import javax.swing.JFrame;
 import javax.swing.*;
 
-public class TrikiGame {
-    public static void main(String[] args) {
+public class TrikiGame
+{
+    public static void main(String[] args)
+    {
         String nombreJugador1 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 1:");
         String nombreJugador2 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 2:");
 

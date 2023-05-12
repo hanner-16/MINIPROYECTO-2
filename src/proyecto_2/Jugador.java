@@ -9,7 +9,8 @@ package proyecto_2;
  * @author Daniel Esteban Gallego Velasco <gallego.daniel@correounivalle.edu.co>
  */
 
-public class Jugador {
+public class Jugador
+{
     private String nombre;
     private int partidasGanadas;
     private char marca;

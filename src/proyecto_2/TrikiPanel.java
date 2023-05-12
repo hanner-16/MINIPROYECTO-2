@@ -64,6 +64,7 @@ public class TrikiPanel extends JPanel {
         btnReiniciar.setBounds(2 * CELDA_MARGIN + 2 * CELDA_SIZE, 3 * CELDA_MARGIN + 2 * CELDA_SIZE, 100, 30);
         btnReiniciar.addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 reiniciarJuego();
@@ -75,6 +76,7 @@ public class TrikiPanel extends JPanel {
         btnRegresar.setBounds(2 * CELDA_MARGIN + 2 * CELDA_SIZE, CELDA_MARGIN, 150, 30);
         btnRegresar.addActionListener(new ActionListener() 
         {
+            @Override
             public void actionPerformed(ActionEvent e) 
             {
                 regresarAlMenu();
@@ -114,6 +116,7 @@ public class TrikiPanel extends JPanel {
         };
         addMouseListener(mouseAdapter);
     }
+    
     @Override
     protected void paintComponent(Graphics g) 
     {

@@ -89,12 +89,15 @@ public class Menu extends JFrame implements ActionListener {
             frame.setVisible(true);
 
             dispose(); // Cerrar la ventana del menú
-        } else if (e.getSource() == instructionButton) {
+        } 
+        else if (e.getSource() == instructionButton) 
+        {
             JOptionPane.showMessageDialog(panelI, "El Triki es un juego que se plantea en una cuadrícula 3x3. Los jugadores colocan sus símbolos en turnos con el objetivo de hacer una línea de tres. Si lo logran, ganan; de lo contrario pierden.");
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         new Menu();
     }
 }
