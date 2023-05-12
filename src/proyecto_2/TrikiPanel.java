@@ -64,14 +64,14 @@ public class TrikiPanel extends JPanel
         // Configurar la apariencia del mensaje en verde neón
         UIManager.put("Label.foreground", new Color(57, 255, 20));
 
-        lblJugador1 = new JLabel("Jugador 1: " + nombreJugador1);
+        lblJugador1 = new JLabel("Jugador 1:" + nombreJugador1);
         lblJugador1.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblJugador1.setBounds(CELDA_MARGIN, CELDA_MARGIN, 150, 20);
+        lblJugador1.setBounds(CELDA_MARGIN , CELDA_MARGIN, 150, 20);
         add(lblJugador1);
 
-        lblJugador2 = new JLabel("Jugador 2: " + nombreJugador2);
+        lblJugador2 = new JLabel("Jugador 2:" + nombreJugador2);
         lblJugador2.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblJugador2.setBounds(PANEL_WIDTH - 150 - CELDA_MARGIN, CELDA_MARGIN, 150, 20);
+        lblJugador2.setBounds(PANEL_WIDTH - 120 - CELDA_MARGIN, CELDA_MARGIN, 150, 20);
         add(lblJugador2);
 
         lblMensaje = new JLabel("");
@@ -84,8 +84,8 @@ public class TrikiPanel extends JPanel
         btnReiniciar.addActionListener(e -> reiniciarJuego());
         add(btnReiniciar);
 
-        btnRegresar = new JButton("Regresar al Menú");
-        btnRegresar.setBounds((PANEL_WIDTH - 350) / 2, PANEL_HEIGHT - CELDA_MARGIN - 5, 150, 15);
+        btnRegresar = new JButton("Menú");
+        btnRegresar.setBounds((PANEL_WIDTH - 350) / 2, PANEL_HEIGHT - CELDA_MARGIN - 5, 100, 15);
         btnRegresar.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e)
