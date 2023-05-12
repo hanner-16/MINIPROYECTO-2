@@ -15,16 +15,23 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
-public class TrikiPanel extends JPanel {
+public class TrikiPanel extends JPanel 
+{
     private static final int CELDA_SIZE = 100;
     private static final int CELDA_MARGIN = 10;
     private static final int PANEL_WIDTH = 3 * (CELDA_SIZE + CELDA_MARGIN) + 2 * CELDA_MARGIN;
@@ -36,23 +43,35 @@ public class TrikiPanel extends JPanel {
     private JLabel lblMensaje;
     private JButton btnReiniciar;
     private JButton btnRegresar;
+    private BufferedImage backgroundImage;
 
-    public TrikiPanel(String nombreJugador1, String nombreJugador2) 
+    public TrikiPanel(String nombreJugador1, String nombreJugador2)
     {
         juego = new Juego(nombreJugador1, nombreJugador2);
 
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        setBackground(Color.WHITE);
         setLayout(null);
+
+        // Carga la imagen de fondo
+        try {
+            backgroundImage = ImageIO.read(new File("src/imagenes/Fondo.jpg"));
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+
+        // Configurar la apariencia del mensaje en verde neón
+        UIManager.put("Label.foreground", new Color(57, 255, 20));
 
         lblJugador1 = new JLabel("Jugador 1: " + nombreJugador1);
         lblJugador1.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblJugador1.setBounds((PANEL_WIDTH - 1) / 2, CELDA_MARGIN, 150, 20);
+        lblJugador1.setBounds(CELDA_MARGIN, CELDA_MARGIN, 150, 20);
         add(lblJugador1);
 
         lblJugador2 = new JLabel("Jugador 2: " + nombreJugador2);
         lblJugador2.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblJugador2.setBounds((PANEL_WIDTH - 150) / 2, 2 * CELDA_MARGIN + CELDA_SIZE, 150, 20);
+        lblJugador2.setBounds(PANEL_WIDTH - 150 - CELDA_MARGIN, CELDA_MARGIN, 150, 20);
         add(lblJugador2);
 
         lblMensaje = new JLabel("");
@@ -61,30 +80,22 @@ public class TrikiPanel extends JPanel {
         add(lblMensaje);
 
         btnReiniciar = new JButton("Reiniciar");
-        btnReiniciar.setBounds(2 * CELDA_MARGIN + 2 * CELDA_SIZE, 3 * CELDA_MARGIN + 2 * CELDA_SIZE, 100, 30);
-        btnReiniciar.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                reiniciarJuego();
-            }
-        });
+        btnReiniciar.setBounds((PANEL_WIDTH + 150) / 2, PANEL_HEIGHT - CELDA_MARGIN - 5, 100, 15);
+        btnReiniciar.addActionListener(e -> reiniciarJuego());
         add(btnReiniciar);
 
         btnRegresar = new JButton("Regresar al Menú");
-        btnRegresar.setBounds(2 * CELDA_MARGIN + 2 * CELDA_SIZE, CELDA_MARGIN, 150, 30);
+        btnRegresar.setBounds((PANEL_WIDTH - 350) / 2, PANEL_HEIGHT - CELDA_MARGIN - 5, 150, 15);
         btnRegresar.addActionListener(new ActionListener() 
         {
-            @Override
-            public void actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e)
             {
                 regresarAlMenu();
             }
         });
         add(btnRegresar);
 
-        MouseAdapter mouseAdapter = new MouseAdapter()
+        MouseAdapter mouseAdapter = new MouseAdapter() 
         {
             @Override
             public void mouseClicked(MouseEvent e)
@@ -101,34 +112,42 @@ public class TrikiPanel extends JPanel {
                         if (juego.getGanador() != null) 
                         {
                             lblMensaje.setText("¡" + juego.getGanador().getNombre() + " ha ganado!");
+                            lblMensaje.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el texto
                             actualizarPuntajes();
                             deshabilitarTablero();
                         } 
-                            else if (juego.getTurnoActual() == null)
-                            {
-                                lblMensaje.setText("¡Empate!");
-                                actualizarPuntajes();
-                                deshabilitarTablero();
-                            }
+                        else if (juego.getTurnoActual() == null)
+                        {
+                            lblMensaje.setText(("¡Empate"));
+                            lblMensaje.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el texto
+                        }
                     }
                 }
             }
         };
+
         addMouseListener(mouseAdapter);
     }
-    
+
     @Override
-    protected void paintComponent(Graphics g) 
+    protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+
+        // Dibuja la imagen de fondo
+        if (backgroundImage != null) 
+        {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+
         int boardWidth = 3 * (CELDA_SIZE + CELDA_MARGIN);
         int boardHeight = 3 * (CELDA_SIZE + CELDA_MARGIN);
         int startX = (getWidth() - boardWidth) / 2;
         int startY = (getHeight() - boardHeight) / 2;
 
-        for (int fila = 0; fila < 3; fila++)
+        for (int fila = 0; fila < 3; fila++) 
         {
-            for (int columna = 0; columna < 3; columna++) 
+            for (int columna = 0; columna < 3; columna++)
             {
                 int x = startX + columna * (CELDA_SIZE + CELDA_MARGIN);
                 int y = startY + fila * (CELDA_SIZE + CELDA_MARGIN);
@@ -140,11 +159,11 @@ public class TrikiPanel extends JPanel {
                 {
                     g.drawString("X", x + 25, y + 65);
                 } 
-                else if (casilla == 'O')
+                else if (casilla == 'O') 
                 {
                     g.drawString("O", x + 25, y + 65);
                 }
-           }
+            }
         }
     }
 
@@ -158,31 +177,29 @@ public class TrikiPanel extends JPanel {
 
     private void actualizarPuntajes()
     {
-       Jugador jugador1 = juego.getJugador1();
-       Jugador jugador2 = juego.getJugador2();
+        Jugador jugador1 = juego.getJugador1();
+        Jugador jugador2 = juego.getJugador2();
 
-       lblJugador1.setText("Jugador 1: " + jugador1.getNombre() + " (" + jugador1.getPartidasGanadas() + " victorias)");
-       lblJugador2.setText("Jugador 2: " + jugador2.getNombre() + " (" + jugador2.getPartidasGanadas() + " victorias)");
+        lblJugador1.setText(jugador1.getNombre() + ":" + jugador1.getPartidasGanadas());
+        lblJugador2.setText(jugador2.getNombre() + ":" + jugador2.getPartidasGanadas());
     }
 
     private void deshabilitarTablero()
     {
         for (MouseListener listener : getMouseListeners())
         {
-        removeMouseListener(listener);
+            removeMouseListener(listener);
         }
     }
 
-    private void habilitarTablero()
-    {
-         MouseListener[] mouseListeners = getMouseListeners();
-        if (mouseListeners.length == 0)
+    private void habilitarTablero() {
+        MouseListener[] mouseListeners = getMouseListeners();
+        if (mouseListeners.length == 0) 
         {
-           MouseListener mouseListener = new MouseAdapter()
-           {
+            MouseListener mouseListener = new MouseAdapter()
+            {
                 @Override
-                public void mouseClicked(MouseEvent e)
-                {
+                public void mouseClicked(MouseEvent e) {
                     int fila = (e.getY() - CELDA_MARGIN) / (CELDA_SIZE + CELDA_MARGIN);
                     int columna = (e.getX() - CELDA_MARGIN) / (CELDA_SIZE + CELDA_MARGIN);
 
@@ -192,13 +209,13 @@ public class TrikiPanel extends JPanel {
                         {
                             repaint();
 
-                            if (juego.getGanador() != null)
+                            if (juego.getGanador () != null) 
                             {
                                 lblMensaje.setText("¡" + juego.getGanador().getNombre() + " ha ganado!");
                                 actualizarPuntajes();
                                 deshabilitarTablero();
                             }
-                            else if (juego.getTurnoActual() == null)
+                            else if (juego.getTurnoActual() == null) 
                             {
                                 lblMensaje.setText("¡Empate!");
                                 actualizarPuntajes();
@@ -211,7 +228,7 @@ public class TrikiPanel extends JPanel {
             addMouseListener(mouseListener);
         }
     }
-    
+
     private void regresarAlMenu() 
     {
         Menu menu = new Menu();
